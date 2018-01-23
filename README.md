@@ -23,3 +23,5 @@ To rotate the character, use the ASDW buttons.
 2. Add the ability to track and teleport to the [position of the camera]
 
 3. Add the ability to use the hotkey
+
+4. Add the ability to teleport to the target behind the back
