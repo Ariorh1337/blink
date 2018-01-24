@@ -8,6 +8,8 @@ To rotate the character, use the ASDW buttons.
 
 # General
 
+Added a binding to the teleport to a low-level health potion, just buy it from merchant and use
+
 [!blink] - for teleportation for several meters
 
 [!back]  - go back if before you teleported badly
@@ -22,6 +24,6 @@ To rotate the character, use the ASDW buttons.
 
 2. Add the ability to track and teleport to the [position of the camera]
 
-3. Add the ability to use the hotkey
+3. -Add the ability to use the hotkey- DONE
 
 4. Add the ability to teleport to the target behind the back
