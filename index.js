@@ -30,7 +30,45 @@ module.exports = function SaveTp(dispatch) {
 				return false;
 
 			case '!blink':
-				tempLoc = {
+				blink()
+				return false;
+
+			case '!back':
+				if ( tempLoc != 0 ) {
+					dispatch.toClient('S_INSTANT_MOVE', 1,{id: id,x: tempLoc.x,y: tempLoc.y,z: tempLoc.z,w: currLocation.w});
+				} else { command.message('You should blink first!') };
+				return false;
+		}
+	};
+
+	command.add('tpa', (argz) => {
+		dispatch.toClient('S_INSTANT_MOVE', 1,{id: id,x: currLocation.x,y: currLocation.y,z: argz,w: currLocation.w})
+		command.message(`Teleported to ${currLocation.x} ${currLocation.y} ${argz}`);
+	})
+
+	dispatch.hook('S_LOGIN', 1, event => ({ cid } = event));
+	dispatch.hook('C_WHISPER', 1, chatHandler);
+	dispatch.hook('C_CHAT', 1, chatHandler);
+	dispatch.hook('C_PLAYER_LOCATION', 1, event => {
+		if(event.type == 2 || event.type == 10) {
+		return false;
+		};
+		currLocation = {
+			x: event.x2,
+			y: event.y2,
+			z: event.z2,
+			w: event.w
+		};
+	});
+
+	dispatch.hook('C_USE_ITEM', 1, (event) => {
+		if(event.item == 6550) {
+			blink()
+			return false;};
+	});
+
+	function blink() {
+		tempLoc = {
 					x: currLocation.x,
 					y: currLocation.y,
 					z: currLocation.z
@@ -139,33 +177,6 @@ module.exports = function SaveTp(dispatch) {
 				};
 
 				dispatch.toClient('S_INSTANT_MOVE', 1,{id: id,x: afterLocation.x,y: afterLocation.y,z: afterLocation.z,w: currLocation.w});
-				return false;
+	}
 
-			case '!back':
-				if ( tempLoc != 0 ) {
-					dispatch.toClient('S_INSTANT_MOVE', 1,{id: id,x: tempLoc.x,y: tempLoc.y,z: tempLoc.z,w: currLocation.w});
-				} else { command.message('You should blink first!') };
-				return false;
-		}
-	};
-
-	command.add('tpa', (argz) => {
-		dispatch.toClient('S_INSTANT_MOVE', 1,{id: id,x: currLocation.x,y: currLocation.y,z: argz,w: currLocation.w})
-		command.message(`Teleported to ${currLocation.x} ${currLocation.y} ${argz}`);
-	})
-
-	dispatch.hook('S_LOGIN', 1, event => ({ cid } = event));
-	dispatch.hook('C_WHISPER', 1, chatHandler);
-	dispatch.hook('C_CHAT', 1, chatHandler);
-	dispatch.hook('C_PLAYER_LOCATION', 1, event => {
-		if(event.type == 2 || event.type == 10) {
-		return false;
-		};
-		currLocation = {
-			x: event.x2,
-			y: event.y2,
-			z: event.z2,
-			w: event.w
-		};
-	});
 };
